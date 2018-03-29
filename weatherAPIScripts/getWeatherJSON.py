@@ -8,6 +8,9 @@ import os
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1',
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
+# note: the AWS key variables need to be added to your OS environment, for this to work.
+# Or, change the code to use your AWS keys directly.
+
 table = dynamodb.Table('WeatherJSON')
 
 def downloadAll(gridPoints):
@@ -18,18 +21,21 @@ def downloadAll(gridPoints):
 			retries -= 1
 			try: 
 				r = requests.get(url)
+				# check that the JSON contains precipitation data. If not, try again.
 				prec = r.json()["properties"]["probabilityOfPrecipitation"]["values"][0]["value"]
 				retries = 0
-				print "{}: {}%".format(locID, prec)
+				# debugging:
+				# print "{}: {}%".format(locID, prec)
 				table.put_item(Item={'url': url, 
 									 'timestamp': datetime.datetime.now().isoformat(), 
 									 'data': json.dumps(r.json())
 							  })
 			except KeyError:
+				# wait a few seconds before trying again
 				time.sleep(3)
 	print("Finished downloading gridpoints")
 
-
+# the location urls of all weather stations that provide precipitation data
 gridPoints = {
 u'K9MN': u'https://api.weather.gov/gridpoints/ARX/21,70',
 u'KDDC': u'https://api.weather.gov/gridpoints/DDC/77,38',
