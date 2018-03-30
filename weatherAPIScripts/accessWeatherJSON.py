@@ -1,6 +1,8 @@
 import time
 import requests
-import boto3
+import boto3 
+from boto3.dynamodb.conditions import Key, Attr
+
 import datetime
 import json
 import os
@@ -13,6 +15,10 @@ dynamodb = boto3.resource('dynamodb', region_name='us-east-1',
 
 table = dynamodb.Table('WeatherJSON')
 
+print("\nTotal count of items in the table")
+print(table.item_count)
+
+
 # Here is an example of how to access the unprocessed forecast data for a specific location
 # The closest weather station to Urbana, IL is:
 # id": "https://api.weather.gov/stations/KCMI",
@@ -24,25 +30,22 @@ table = dynamodb.Table('WeatherJSON')
 # https://api.weather.gov/gridpoints/ILX/94,68
 
 
+uiucUrl = "https://api.weather.gov/gridpoints/ILX/94,68"
 
-def downloadAll(gridPoints):
-	print("Starting to download gridpoints")
-	for locID, url in gridPoints.items():
-		retries = 7
-		while retries > 0:
-			retries -= 1
-			try: 
-				r = requests.get(url)
-				# check that the JSON contains precipitation data. If not, try again.
-				prec = r.json()["properties"]["probabilityOfPrecipitation"]["values"][0]["value"]
-				retries = 0
-				# debugging:
-				# print "{}: {}%".format(locID, prec)
-				table.put_item(Item={'url': url, 
-									 'timestamp': datetime.datetime.now().isoformat(), 
-									 'data': json.dumps(r.json())
-							  })
-			except KeyError:
-				# wait a few seconds before trying again
-				time.sleep(3)
-	print("Finished downloading gridpoints")
+response = table.query(
+    KeyConditionExpression=Key('url').eq(uiucUrl),
+    # get just two items for now
+    Limit=2
+)
+
+# get item from the query results
+for item in response['Items']:
+	# convert the json in string format to a json object
+	weatherJSON = json.loads(item['data'])
+
+	print("\nTime of predictions:")
+	print(weatherJSON["properties"]['updateTime'])
+
+	print("\npredicted time:\t\t\t\tprobability of precipitation")
+	for predication in weatherJSON["properties"]["probabilityOfPrecipitation"]["values"]:
+		print('{}\t\t{}%'.format(predication['validTime'],predication['value']))
