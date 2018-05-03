@@ -13,7 +13,7 @@ secretKey = os.environ['AWS_SECRET_ACCESS_KEY']
 
 weatherProperties = ["probabilityOfPrecipitation", "maxTemperature", "quantitativePrecipitation"]
 for code in gridpoints.weatherStationCodeToURL.keys():
-	weatherUtilv2.retrieveDataForLocation(code, weatherProperties,
+	weatherUtilHBase.retrieveDataForLocation(code, weatherProperties,
 										accessKey=accessKey, 
 										secretKey=secretKey,
 										connection=conn)
