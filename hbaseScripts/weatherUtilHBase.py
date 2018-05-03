@@ -110,7 +110,7 @@ def tableToHbase(wProperty, code, conn):
 				'cf:location_code': code,
 				'cf:weather_time': wTime,
 				'cf:time_ahead': timeAhead,
-				'cf:value' : value
+				'cf:value' : str(value)
 			}
 			batch.put(key, data)
 	batch.send()
