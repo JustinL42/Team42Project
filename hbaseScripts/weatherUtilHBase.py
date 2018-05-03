@@ -66,7 +66,7 @@ def parseGeneral(weatherJSON, wProperty, wTimeUnits, pTimeUnits, oneTimeUnitPerP
 				if column not in tables[wProperty][currentWTimeStr]:
 					tables[wProperty][currentWTimeStr][column] = value
 				else:
-					# when there are multiple predications for the same time period, use the max prediction
+					# when there are multiple predictions for the same time period, use the max prediction
 					tables[wProperty][currentWTimeStr][column] = max(value, tables[wProperty][currentWTimeStr][column])
 
 			if oneTimeUnitPerPrediction:
@@ -103,7 +103,7 @@ def tableToHbase(wProperty, code, conn):
 	# wTimes.sort()
 	for wTime in wTimes:
 		predictions = tables[wProperty][wTime]
-		for timeAhead, value in predication.items():
+		for timeAhead, value in predictions.items():
 			data = {
 				'cf:location_code': code,
 				'cf:weather_time': wTime,

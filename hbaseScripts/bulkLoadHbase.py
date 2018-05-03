@@ -18,4 +18,6 @@ for code in gridpoints.weatherStationCodeToURL.keys():
 										secretKey=secretKey,
 										connection=conn)
 	print("Got data for {}".format(code))
+	break
+	# ^ remove this after initial test
 
