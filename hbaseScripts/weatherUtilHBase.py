@@ -112,7 +112,17 @@ def tableToHbase(wProperty, code, conn):
 				'cf:' +  timeAhead : str(value),
 			}
 			batch.put(key, data)
-	batch.send()
+
+	for attempt in range(6):
+		try:
+			batch.send()
+			# if no errors thrown, don't retry
+			break
+		except :
+			print("Unknown error while writing {} to hbase:".format(code))
+			print(str(sys.exc_info()[0]))
+			waitTime = 20 * (1 + attempt)
+			print("waiting for {} seconds".format(waitTime))
 
 
 def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey="", secretKey=""):
