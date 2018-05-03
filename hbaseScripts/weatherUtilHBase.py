@@ -105,7 +105,7 @@ def tableToHbase(wProperty, code, conn):
 	for wTime in wTimes:
 		predictions = tables[wProperty][wTime]
 		for timeAhead, value in predictions.items():
-			key = code + weatherTime
+			key = code + wTime
 			data = {
 				'cf:location_code': code,
 				'cf:weather_time': wTime,
