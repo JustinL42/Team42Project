@@ -101,15 +101,20 @@ def tableToHbase(wProperty, code, conn):
 	table = conn.table(wProperty)
 	wTimes = list(tables[wProperty].keys())
 	# wTimes.sort()
+	batch = table.batch()
 	for wTime in wTimes:
 		predictions = tables[wProperty][wTime]
 		for timeAhead, value in predictions.items():
+			key = code + weatherTime
 			data = {
 				'cf:location_code': code,
 				'cf:weather_time': wTime,
 				'cf:time_ahead': timeAhead,
 				'cf:value' : value
 			}
+			batch.put(key, data)
+	batch.send()
+
 
 def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey="", secretKey=""):
 	url = gridpoints.weatherStationCodeToURL[code]
