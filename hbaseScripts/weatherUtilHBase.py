@@ -133,6 +133,9 @@ def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey
 	global tables
 	tables = {}
 
+	for wProperty in listOfWeatherProperties:
+		tables[wProperty] = {}
+
 	implementedWeatherParsers = set(["probabilityOfPrecipitation", 
 							"maxTemperature", "quantitativePrecipitation"])
 
