@@ -119,7 +119,7 @@ def tableToHbase(wProperty, code, conn):
 			break
 		except :
 			conn.close()
-			conn = hb.connection()
+			conn = hb.Connection()
 			table = conn.table(wProperty)
 			waitTime = 10 * (1 + attempt)
 			# print("waiting for {} seconds".format(waitTime))
