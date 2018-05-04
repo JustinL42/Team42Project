@@ -1,0 +1,58 @@
+Most accurate predictions of rain:
+PADE    100.000 %
+KSRQ    100.000 %
+KSOW    100.000 %
+KHBV    100.000 %
+ESPA    100.000 %
+
+Least accurate predictions of rain:
+KMKY    0.000 %
+PHMU    0.000 %
+KPTD    2.703 %
+KSDC    3.448 %
+CYER    3.571 %
+
+Most accurate predictions of non-rain:
+PHMU    100.000 %
+PHMK    50.000 %
+PACV    7.692 %
+PADK    6.250 %
+PADU    5.882 %
+
+Least accurate predictions of non-rain:
+ESPA    1.370 %
+KIFP    1.389 %
+KVCV    1.389 %
+KGTU    1.408 %
+KSBD    1.408 %
+
+
+
+
+Most accurate high temp. predictions:
+KHJO    -0.00000 C
+PHMK    -0.00000 C
+KSDC    -0.00000 C
+KDKX    -0.00000 C
+K3LF    0.00000 C
+
+Least accurate high temp. predictions:
+KLCG    -2.16931 C
+KSDA    -2.11382 C
+KMKJ    -1.63889 C
+KBCB    -1.51762 C
+KDHS    -1.34722 C
+
+Lowest variance in high temp. prediction accuracy:
+PHMU    0.31545 C^2
+PHMK    0.31656 C^2
+KHJO    0.33123 C^2
+PADK    0.36703 C^2
+KSOW    0.46279 C^2
+
+Highest variance in high temp. prediction accuracy:
+KSDA    20.69783 C^2
+KBDE    20.62345 C^2
+KLCG    10.65657 C^2
+KBCB    9.46025 C^2
+KMKJ    8.78363 C^2

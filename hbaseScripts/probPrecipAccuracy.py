@@ -27,6 +27,9 @@ conn.close()
 
 rainPredictionAccuracy = [(mean(boolList), code) for code, boolList in rainPredictions.items()]
 noRainPredictionAccuracy = [(mean(boolList), code) for code, boolList in noRainPredictions.items()]
+rainPredictionAccuracy.sort()
+noRainPredictionAccuracy.sort()
+
 
 topXrain = min(5, len(rainPredictionAccuracy))
 topXnorain = min(5, len(noRainPredictionAccuracy))

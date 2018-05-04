@@ -6,7 +6,7 @@ conn = hb.Connection()
 table = conn.table("maxTemperature")
 
 predictionDiff = {}
-for _, rowData in table.scan(limit=50):
+for _, rowData in table.scan():
 	print('.', end='')
 	if 'cf:t-024h' in rowData and 'cf:t-000h' in rowData:
 		code = rowData['cf:location_code']
