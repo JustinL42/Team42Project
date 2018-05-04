@@ -29,19 +29,19 @@ topX = min(5, len(averageDifference))
 print("\nMost accurate high temp. predictions:")
 for i in range(topX):
 	absValue, value, code = averageDifference[i]
-	print("{}\t{0:.2f} C".format(code, value))
+	print("{}\t{:.5f} C".format(code, value))
 
 print("\nLeast accurate high temp. predictions:")
 for i in range(1, topX + 1):
 	absValue, value, code = averageDifference[-i]
-	print("{}\t{0:.2f} C".format(code, value))
+	print("{}\t{:.5f} C".format(code, value))
 
 print("\nLowest variance in high temp. prediction accuracy:")
 for i in range(topX):
 	value, code = differenceVariance[i]
-	print("{}\t{0:.2f} C^2".format(code, value))
+	print("{}\t{:.5f} C^2".format(code, value))
 
 print("\nHighest variance in high temp. prediction accuracy:")
 for i in range(1, topX + 1):
 	value, code = differenceVariance[-i]
-	print("{}\t{0:.2f} C^2".format(code, value))
+	print("{}\t{:.5f} C^2".format(code, value))

@@ -171,7 +171,7 @@ def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey
 					for wProperty in listOfWeatherProperties:
 						if wProperty == "maxTemperature":
 							parseMaxTemperature(weatherJSON)
-						if wProperty == "probabilityOfPrecipitation":
+						elif wProperty == "probabilityOfPrecipitation":
 							parseProbabilityOfPrecipitation(weatherJSON)
 						else:
 							parseQuantitativePrecipitation(weatherJSON)
