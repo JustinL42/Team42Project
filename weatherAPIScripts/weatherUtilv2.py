@@ -127,9 +127,6 @@ def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey
 	global tables
 	tables = {}
 
-	implementedWeatherParsers = set(["probabilityOfPrecipitation", 
-							"maxTemperature", "quantitativePrecipitation"])
-
 	for wProperty in listOfWeatherProperties:
 		tables[wProperty] = {}
 		if wProperty in implementedWeatherParsers:
@@ -162,7 +159,7 @@ def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey
 					for wProperty in listOfWeatherProperties:
 						if wProperty == "maxTemperature":
 							parseMaxTemperature(weatherJSON)
-						if wProperty == "probabilityOfPrecipitation":
+						elif wProperty == "probabilityOfPrecipitation":
 							parseProbabilityOfPrecipitation(weatherJSON)
 						else:
 							parseQuantitativePrecipitation(weatherJSON)
