@@ -11,8 +11,8 @@ for _, rowData in table.scan():
 	print('.', end='')
 	if 'cf:t-024h' in rowData and 'cf:t-000h' in rowData:
 		code = rowData['cf:location_code']
-		predictedRain = (rowData['cf:t-024h'] >= 0.5)
-		actuallyRained = (rowData['cf:t-000h'] >= 0.5)
+		predictedRain = (float(rowData['cf:t-024h']) >= 50)
+		actuallyRained = (float(rowData['cf:t-000h']) >= 50)
 		if predictedRain:
 			if code not in rainPredictions:
 				rainPredictions[code] = []
@@ -28,8 +28,8 @@ conn.close()
 rainPredictionAccuracy = [(mean(boolList), code) for code, boolList in rainPredictions.items()]
 noRainPredictionAccuracy = [(mean(boolList), code) for code, boolList in noRainPredictions.items()]
 
-topXrain = min(5, len(rainPredictions))
-topXnorain = min(5, len(noRainPredictions))
+topXrain = min(5, len(rainPredictionAccuracy))
+topXnorain = min(5, len(noRainPredictionAccuracy))
 
 print("\nMost accurate predictions of rain:")
 for i in range(1, topXrain + 1):
