@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import weatherUtilHBase
 import gridpoints
@@ -11,13 +12,12 @@ conn = hb.Connection()
 accessKey = os.environ['AWS_ACCESS_KEY_ID']
 secretKey = os.environ['AWS_SECRET_ACCESS_KEY']
 
-weatherProperties = ["probabilityOfPrecipitation", "maxTemperature", "quantitativePrecipitation"]
+print("\n", end="")
+weatherProperties = ["probabilityOfPrecipitation", "maxTemperature"]
 for code in gridpoints.weatherStationCodeToURL.keys():
 	weatherUtilHBase.retrieveDataForLocation(code, weatherProperties,
 										accessKey=accessKey, 
 										secretKey=secretKey,
 										connection=conn)
-	print("Got data for {}".format(code))
-	break
-	# ^ remove this after initial test
+	print(code + " ", end='')
 

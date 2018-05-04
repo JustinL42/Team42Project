@@ -1,0 +1,4 @@
+import happybase as hb
+
+conn = hb.Connection()
+table = conn.table("maxTemperature")

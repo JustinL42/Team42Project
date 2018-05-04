@@ -100,7 +100,6 @@ def parseMaxTemperature(weatherJSON):
 def tableToHbase(wProperty, code, conn):
 	table = conn.table(wProperty)
 	wTimes = list(tables[wProperty].keys())
-	# wTimes.sort()
 	batch = table.batch()
 	for wTime in wTimes:
 		predictions = tables[wProperty][wTime]
@@ -119,10 +118,13 @@ def tableToHbase(wProperty, code, conn):
 			# if no errors thrown, don't retry
 			break
 		except :
-			print("Unknown error while writing {} to hbase:".format(code))
-			print(str(sys.exc_info()[0]))
-			waitTime = 20 * (1 + attempt)
-			print("waiting for {} seconds".format(waitTime))
+			conn.close()
+			conn = hb.connection()
+			table = conn.table(wProperty)
+			waitTime = 10 * (1 + attempt)
+			# print("waiting for {} seconds".format(waitTime))
+		if (attempt == 5):
+			print("\nFailed to put {} data for {}".format(wProperty, code))
 
 
 def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey="", secretKey=""):
@@ -133,14 +135,6 @@ def retrieveDataForLocation(code, listOfWeatherProperties, **kwargs): #accessKey
 
 	implementedWeatherParsers = set(["probabilityOfPrecipitation", 
 							"maxTemperature", "quantitativePrecipitation"])
-
-	for wProperty in listOfWeatherProperties:
-		tables[wProperty] = {}
-		if wProperty in implementedWeatherParsers:
-			print("Using {0} parser for property {0}.".format(wProperty))
-		else:
-			print("No parser implement for weather property {}.", 
-				" Using the default/quantitativePrecipitation parser for this data.")
 
 	if ('accessKey' in kwargs and 'secretKey' in kwargs):
 			accessKey = kwargs['accessKey']
